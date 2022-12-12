@@ -95,11 +95,6 @@ namespace FolderEmailSenderWatcher
                 m_Sb.Append("    ");
                 m_Sb.Append(DateTime.Now.ToString());
                 m_bDirty = true;
-                if (rdbFile.Checked)
-                {
-                    m_Watcher.Filter = e.Name;
-                    m_Watcher.Path = e.FullPath.Substring(0, e.FullPath.Length - m_Watcher.Filter.Length);
-                }
             }
         }
 
@@ -146,15 +141,6 @@ namespace FolderEmailSenderWatcher
                     sw.WriteLine(sItem);
                 }
                 sw.Close();
-            }
-        }
-
-        private void rdbFile_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rdbFile.Checked == true)
-            {
-                chkSubFolder.Enabled = false;
-                chkSubFolder.Checked = false;
             }
         }
 

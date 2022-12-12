@@ -39,7 +39,6 @@ namespace FolderEmailSenderWatcher
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkSubFolder = new System.Windows.Forms.CheckBox();
             this.rdbDir = new System.Windows.Forms.RadioButton();
-            this.rdbFile = new System.Windows.Forms.RadioButton();
             this.btnBrowseFile = new System.Windows.Forms.Button();
             this.dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
@@ -105,7 +104,6 @@ namespace FolderEmailSenderWatcher
             // 
             this.groupBox1.Controls.Add(this.chkSubFolder);
             this.groupBox1.Controls.Add(this.rdbDir);
-            this.groupBox1.Controls.Add(this.rdbFile);
             this.groupBox1.Location = new System.Drawing.Point(15, 13);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(772, 68);
@@ -117,7 +115,7 @@ namespace FolderEmailSenderWatcher
             // 
             this.chkSubFolder.AutoSize = true;
             this.chkSubFolder.Enabled = false;
-            this.chkSubFolder.Location = new System.Drawing.Point(185, 45);
+            this.chkSubFolder.Location = new System.Drawing.Point(202, 29);
             this.chkSubFolder.Name = "chkSubFolder";
             this.chkSubFolder.Size = new System.Drawing.Size(114, 17);
             this.chkSubFolder.TabIndex = 2;
@@ -127,26 +125,13 @@ namespace FolderEmailSenderWatcher
             // rdbDir
             // 
             this.rdbDir.AutoSize = true;
-            this.rdbDir.Location = new System.Drawing.Point(6, 42);
+            this.rdbDir.Location = new System.Drawing.Point(23, 26);
             this.rdbDir.Name = "rdbDir";
             this.rdbDir.Size = new System.Drawing.Size(102, 17);
             this.rdbDir.TabIndex = 1;
             this.rdbDir.Text = "Watch Directory";
             this.rdbDir.UseVisualStyleBackColor = true;
             this.rdbDir.CheckedChanged += new System.EventHandler(this.rdbDir_CheckedChanged);
-            // 
-            // rdbFile
-            // 
-            this.rdbFile.AutoSize = true;
-            this.rdbFile.Checked = true;
-            this.rdbFile.Location = new System.Drawing.Point(6, 19);
-            this.rdbFile.Name = "rdbFile";
-            this.rdbFile.Size = new System.Drawing.Size(76, 17);
-            this.rdbFile.TabIndex = 0;
-            this.rdbFile.TabStop = true;
-            this.rdbFile.Text = "Watch File";
-            this.rdbFile.UseVisualStyleBackColor = true;
-            this.rdbFile.CheckedChanged += new System.EventHandler(this.rdbFile_CheckedChanged);
             // 
             // btnBrowseFile
             // 
@@ -214,7 +199,6 @@ namespace FolderEmailSenderWatcher
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Timer tmrEditNotify;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton rdbFile;
         private System.Windows.Forms.RadioButton rdbDir;
         private System.Windows.Forms.Button btnBrowseFile;
         private System.Windows.Forms.OpenFileDialog dlgOpenFile;
