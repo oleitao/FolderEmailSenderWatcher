@@ -175,15 +175,6 @@ namespace FolderEmailSenderWatcher
             }
         }
 
-        private void rdbFile_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rdbFile.Checked == true)
-            {
-                chkSubFolder.Enabled = false;
-                chkSubFolder.Checked = false;
-            }
-        }
-
         private void rdbDir_CheckedChanged(object sender, EventArgs e)
         {
             if (rdbDir.Checked == true)
