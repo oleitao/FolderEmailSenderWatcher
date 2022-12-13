@@ -45,12 +45,18 @@ namespace FolderEmailSenderWatcher
             this.dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
             this.btnLog = new System.Windows.Forms.Button();
             this.dlgSaveFile = new System.Windows.Forms.SaveFileDialog();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuViews = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuContacts = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuDBConnection = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtFile
             // 
-            this.txtFile.Location = new System.Drawing.Point(12, 108);
+            this.txtFile.Location = new System.Drawing.Point(23, 130);
             this.txtFile.Name = "txtFile";
             this.txtFile.Size = new System.Drawing.Size(694, 20);
             this.txtFile.TabIndex = 0;
@@ -59,7 +65,7 @@ namespace FolderEmailSenderWatcher
             // 
             this.lblFile.AutoSize = true;
             this.lblFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFile.Location = new System.Drawing.Point(11, 90);
+            this.lblFile.Location = new System.Drawing.Point(22, 112);
             this.lblFile.Name = "lblFile";
             this.lblFile.Size = new System.Drawing.Size(124, 13);
             this.lblFile.TabIndex = 1;
@@ -70,7 +76,7 @@ namespace FolderEmailSenderWatcher
             this.btnWatchFile.BackColor = System.Drawing.Color.LightSkyBlue;
             this.btnWatchFile.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnWatchFile.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnWatchFile.Location = new System.Drawing.Point(11, 134);
+            this.btnWatchFile.Location = new System.Drawing.Point(22, 156);
             this.btnWatchFile.Name = "btnWatchFile";
             this.btnWatchFile.Size = new System.Drawing.Size(119, 23);
             this.btnWatchFile.TabIndex = 4;
@@ -81,7 +87,7 @@ namespace FolderEmailSenderWatcher
             // lstNotification
             // 
             this.lstNotification.FormattingEnabled = true;
-            this.lstNotification.Location = new System.Drawing.Point(11, 185);
+            this.lstNotification.Location = new System.Drawing.Point(22, 207);
             this.lstNotification.Name = "lstNotification";
             this.lstNotification.Size = new System.Drawing.Size(776, 225);
             this.lstNotification.TabIndex = 5;
@@ -90,7 +96,7 @@ namespace FolderEmailSenderWatcher
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(11, 169);
+            this.label3.Location = new System.Drawing.Point(22, 191);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(125, 13);
             this.label3.TabIndex = 6;
@@ -106,7 +112,7 @@ namespace FolderEmailSenderWatcher
             this.groupBox1.Controls.Add(this.chkSubFolder);
             this.groupBox1.Controls.Add(this.rdbDir);
             this.groupBox1.Controls.Add(this.rdbFile);
-            this.groupBox1.Location = new System.Drawing.Point(15, 13);
+            this.groupBox1.Location = new System.Drawing.Point(26, 35);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(772, 68);
             this.groupBox1.TabIndex = 7;
@@ -152,7 +158,7 @@ namespace FolderEmailSenderWatcher
             // 
             this.btnBrowseFile.BackColor = System.Drawing.Color.LightSkyBlue;
             this.btnBrowseFile.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnBrowseFile.Location = new System.Drawing.Point(712, 105);
+            this.btnBrowseFile.Location = new System.Drawing.Point(723, 127);
             this.btnBrowseFile.Name = "btnBrowseFile";
             this.btnBrowseFile.Size = new System.Drawing.Size(75, 23);
             this.btnBrowseFile.TabIndex = 8;
@@ -168,7 +174,7 @@ namespace FolderEmailSenderWatcher
             // 
             this.btnLog.BackColor = System.Drawing.SystemColors.Highlight;
             this.btnLog.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnLog.Location = new System.Drawing.Point(11, 422);
+            this.btnLog.Location = new System.Drawing.Point(22, 444);
             this.btnLog.Name = "btnLog";
             this.btnLog.Size = new System.Drawing.Size(119, 23);
             this.btnLog.TabIndex = 9;
@@ -181,11 +187,53 @@ namespace FolderEmailSenderWatcher
             this.dlgSaveFile.DefaultExt = "log";
             this.dlgSaveFile.Filter = "LogFiles|*.log";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuViews,
+            this.menuSettings});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(823, 24);
+            this.menuStrip1.TabIndex = 11;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // menuViews
+            // 
+            this.menuViews.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuContacts});
+            this.menuViews.Name = "menuViews";
+            this.menuViews.Size = new System.Drawing.Size(49, 20);
+            this.menuViews.Text = "Views";
+            // 
+            // menuContacts
+            // 
+            this.menuContacts.Name = "menuContacts";
+            this.menuContacts.Size = new System.Drawing.Size(121, 22);
+            this.menuContacts.Text = "Contacts";
+            this.menuContacts.Click += new System.EventHandler(this.menuContacts_Click);
+            // 
+            // menuSettings
+            // 
+            this.menuSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuDBConnection});
+            this.menuSettings.Name = "menuSettings";
+            this.menuSettings.Size = new System.Drawing.Size(61, 20);
+            this.menuSettings.Text = "Settings";
+            // 
+            // menuDBConnection
+            // 
+            this.menuDBConnection.Name = "menuDBConnection";
+            this.menuDBConnection.Size = new System.Drawing.Size(187, 22);
+            this.menuDBConnection.Text = "Database Connection";
+            this.menuDBConnection.Click += new System.EventHandler(this.menuDBConnection_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 457);
+            this.ClientSize = new System.Drawing.Size(823, 475);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.btnLog);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label3);
@@ -195,11 +243,15 @@ namespace FolderEmailSenderWatcher
             this.Controls.Add(this.btnWatchFile);
             this.Controls.Add(this.btnBrowseFile);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "FormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Directory Change Notifier";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -222,6 +274,11 @@ namespace FolderEmailSenderWatcher
         private System.Windows.Forms.Button btnLog;
         private System.Windows.Forms.SaveFileDialog dlgSaveFile;
         private System.Windows.Forms.CheckBox chkSubFolder;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuViews;
+        private System.Windows.Forms.ToolStripMenuItem menuContacts;
+        private System.Windows.Forms.ToolStripMenuItem menuSettings;
+        private System.Windows.Forms.ToolStripMenuItem menuDBConnection;
     }
 }
 

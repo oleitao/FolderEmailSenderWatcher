@@ -1,26 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Drawing;
+using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
 
 namespace FolderEmailSenderWatcher
 {
     public partial class FormMain : Form
     {
+        private MySqlConnection mConn;
+
         private StringBuilder m_Sb;
         private bool m_bDirty;
         private System.IO.FileSystemWatcher m_Watcher;
         private bool m_bIsWatching;
+
+        private Connection _conn;
+        public Connection Conn { get => _conn; set => _conn = value; }
+
         public FormMain()
         {
             InitializeComponent();
             m_Sb = new StringBuilder();
             m_bDirty = false;
             m_bIsWatching = false;
+
+            _conn = new Connection(Properties.Settings.Default.ConnectionString);
         }
 
         private void btnWatchFile_Click(object sender, EventArgs e)
@@ -59,11 +67,44 @@ namespace FolderEmailSenderWatcher
 
                 m_Watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
                                      | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-                m_Watcher.Changed += new FileSystemEventHandler(OnChanged);
+
                 m_Watcher.Created += new FileSystemEventHandler(OnChanged);
-                m_Watcher.Deleted += new FileSystemEventHandler(OnChanged);
-                m_Watcher.Renamed += new RenamedEventHandler(OnRenamed);
                 m_Watcher.EnableRaisingEvents = true;
+            }
+        }
+
+        public bool SendEmail(string attachPath, AppMail mailData)
+        {
+            try
+            {
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress(Properties.Settings.Default.FromEmail);
+
+                    if(!string.IsNullOrEmpty(mailData.Email1))
+                        mail.To.Add(mailData.Email1);
+
+                    if (!string.IsNullOrEmpty(mailData.Email2))
+                        mail.To.Add(mailData.Email2);
+
+                    mail.Subject = string.Format("{0} - {1}", mailData.Company , mailData.Manager);
+                    mail.Body = Properties.Settings.Default.Body;
+                    mail.IsBodyHtml = true;
+                    mail.Attachments.Add(new Attachment(attachPath));
+
+                    using (SmtpClient smtp = new SmtpClient(Properties.Settings.Default.SMTPAddress, Properties.Settings.Default.PortNumber))
+                    {
+                        smtp.Credentials = new NetworkCredential(Properties.Settings.Default.FromEmail, Properties.Settings.Default.Password);
+                        smtp.EnableSsl = Properties.Settings.Default.EnableSSL;
+                        smtp.Send(mail);
+
+                        return true;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                return false;
             }
         }
 
@@ -71,34 +112,19 @@ namespace FolderEmailSenderWatcher
         {
             if (!m_bDirty)
             {
-                m_Sb.Remove(0, m_Sb.Length);
-                m_Sb.Append(e.FullPath);
-                m_Sb.Append(" ");
-                m_Sb.Append(e.ChangeType.ToString());
-                m_Sb.Append("    ");
-                m_Sb.Append(DateTime.Now.ToString());
-                m_bDirty = true;
-            }
-        }
-
-        private void OnRenamed(object sender, RenamedEventArgs e)
-        {
-            if (!m_bDirty)
-            {
-                m_Sb.Remove(0, m_Sb.Length);
-                m_Sb.Append(e.OldFullPath);
-                m_Sb.Append(" ");
-                m_Sb.Append(e.ChangeType.ToString());
-                m_Sb.Append(" ");
-                m_Sb.Append("to ");
-                m_Sb.Append(e.Name);
-                m_Sb.Append("    ");
-                m_Sb.Append(DateTime.Now.ToString());
-                m_bDirty = true;
-                if (rdbFile.Checked)
+                AppMail email = Conn.ComposeEmail(e.Name);
+                if (email != null)
                 {
-                    m_Watcher.Filter = e.Name;
-                    m_Watcher.Path = e.FullPath.Substring(0, e.FullPath.Length - m_Watcher.Filter.Length);
+                    if (SendEmail(e.FullPath, email))
+                    {
+                        m_Sb.Remove(0, m_Sb.Length);
+                        m_Sb.Append(e.FullPath);
+                        m_Sb.Append(" ");
+                        m_Sb.Append(e.ChangeType.ToString());
+                        m_Sb.Append("    ");
+                        m_Sb.Append(DateTime.Now.ToString());
+                        m_bDirty = true;
+                    }
                 }
             }
         }
@@ -164,6 +190,18 @@ namespace FolderEmailSenderWatcher
             {
                 chkSubFolder.Enabled = true;
             }
+        }
+
+        private void menuContacts_Click(object sender, EventArgs e)
+        {
+            FormContacts formContacts = new FormContacts(Conn);
+            formContacts.ShowDialog();
+        }
+
+        private void menuDBConnection_Click(object sender, EventArgs e)
+        {
+            FormDBSettingConnection formDBSettingConnection = new FormDBSettingConnection();
+            formDBSettingConnection.ShowDialog();
         }
     }
 }
